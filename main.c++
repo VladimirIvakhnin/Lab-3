@@ -1,0 +1,81 @@
+// Example program
+#include <iostream>
+using namespace std;
+
+//If1.Дано номер року (додатне ціле число). Визначити кількість днів в цьому році,
+// враховуючи, що звичайний рік нараховує 365 днів, а високосний - 366 днів.
+//Високосним вважається рік, ділиться на 4, за винятком тих років, які діляться на 100 і
+//не діляться на 400 (наприклад, роки 300 1300 і 1900 не є високосними, а 1200 і 2000 -
+//є).
+void task_if128(); // завдання 1 декларація функції
+
+// Дано координати точки на площині (x, y).
+// Визначити, чи потрапляє точка в фігуру заданого кольору (або групу фігур)
+// і вивести відповідне повідомлення.
+void task_geom13();// завдання 2 декларація функції
+
+int main() {
+    int menu;
+    cout << "Task number: ";
+   cin >> menu;
+
+    switch (menu) 
+    {
+        case 1:task_if128();break; // Завдання 1
+        case 2:task_geom13();break; // Завдання 2
+        default: cout << "Wrong task! (Only 1,2)" << endl; //повідомлення про помилку
+    }
+    system ("pause");
+    return 0;
+}    
+    // Завдання 1: визначити кількість днів у році
+void task_if128()
+{
+    int year;
+    cout << "Введіть рік: ";
+    cin >> year;
+
+    if (cin.fail()) {
+        cout << "Невірне введення!" << endl;
+        return ;
+    }
+
+    bool leap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+
+    if (leap)
+        cout << "Цього року 366 днів (високосний рік)." << endl;
+    else
+        cout << "Цей рік має 365 днів (звичайний рік)." << endl;
+}
+
+// Завдання 2: варіант 13 – перевірити належність точки області
+void task_geom13() {
+    double x, y, r;
+
+    cout << "Введіть координати точки (x, y): ";
+    cin >> x >> y;
+    cout << "Введіть радіус r: ";
+    cin >> r;
+
+    if (cin.fail() || r <= 0) {
+        cerr << "Некоректні дані!" << endl;
+        return;
+    }
+    // Ліве коло: центр (-r, 0)
+    double circleLeft = pow(x + r, 2) + pow(y, 2);
+    // Праве коло: центр (r, 0)
+    double circleRight = pow(x - r, 2) + pow(y, 2);
+
+    bool inLeftCircle = circleLeft <= r * r;
+    bool inRightCircle = circleRight <= r * r;
+
+    // Темно-зелена область — перетин двох кіл
+    bool inDarkGreen = inLeftCircle && inRightCircle;
+
+    if (inDarkGreen) {
+        cout << "Точка належить області 13 (темно-зелена частина)." << endl;
+    } else {
+        cout << "Точка НЕ належить області 13." << endl;
+    }
+    return;
+}
